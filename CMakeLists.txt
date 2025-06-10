@@ -10,6 +10,13 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 
+if(WIN32)
+  list(APPEND CMAKE_PREFIX_PATH "C:\\Program Files (x86)\\ReactPhysics3D")
+elseif(APPLE)
+  list(APPEND CMAKE_PREFIX_PATH "/usr/local/lib/cmake/ReactPhysics3D")
+endif()
+find_package(ReactPhysics3D REQUIRED)
+
 add_library(glad STATIC ../external/glad/src/glad.c)
 set_target_properties(glad PROPERTIES LINKER_LANGUAGE C)
 target_include_directories(glad PUBLIC ../external/glad/include)
@@ -31,4 +38,4 @@ target_include_directories( main PRIVATE
     ${OPENGL_INCLUDE_DIRS} 
 )
 
-target_link_libraries(main PRIVATE glad glfw OpenGL::GL glm::glm)
+target_link_libraries(main PRIVATE glad glfw OpenGL::GL glm::glm ReactPhysics3D::ReactPhysics3D)

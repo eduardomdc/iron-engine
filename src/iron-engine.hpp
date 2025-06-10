@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "camera.hpp"
+#include "physics_system.hpp"
 #include "window.hpp"
 #include "shader.hpp"
 #include "component_manager.hpp"
@@ -29,6 +30,7 @@ private:
     IronEngine();// only by get
     IronEngine(const IronEngine&) = delete; // no copy
     IronEngine& operator = (const IronEngine&) = delete; // no assignments
+    PhysicsSystem physics_system;
     Entity next_entity_id = 1;
     Window window;
     Camera camera = Camera(800,600,{0,0,0});
