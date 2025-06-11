@@ -27,6 +27,7 @@ set(MY_SOURCE_FILES
     ../src/window.cpp
     ../src/shader.cpp
     ../src/camera.cpp
+    ../src/physics_system.cpp
     ../src/mesh/VBO.cpp
     ../src/mesh/VAO.cpp
     ../src/mesh/EBO.cpp

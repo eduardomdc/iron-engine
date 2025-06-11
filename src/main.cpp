@@ -4,6 +4,7 @@
 
 int main (){
     while (IronEngine::get().is_running()) {
+        IronEngine::get().update();
         IronEngine::get().render();
         IronEngine::get().handle_inputs();
     }

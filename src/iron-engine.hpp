@@ -19,6 +19,7 @@ public:
         return instance;
     }
     void render();
+    void update();
     void render_entities();
     void handle_inputs();
     bool is_running();
@@ -26,11 +27,14 @@ public:
     Entity create_entity();
     void test_entities();
     EventManager event_manager;
+    void make_cube_at(glm::vec3 pos, MeshID mesh_id, rp3d::BodyType physics_type);
 private:
     IronEngine();// only by get
     IronEngine(const IronEngine&) = delete; // no copy
     IronEngine& operator = (const IronEngine&) = delete; // no assignments
-    PhysicsSystem physics_system;
+    const double fps = 60.0;
+    const double frame_time = 1/fps;
+    double last_frame, accumulator;
     Entity next_entity_id = 1;
     Window window;
     Camera camera = Camera(800,600,{0,0,0});
@@ -38,6 +42,8 @@ private:
     MeshManager mesh_manager;
     ComponentManager<Transform> transforms;
     ComponentManager<MeshComponent> meshes;
+    ComponentManager<RigidBody> rigid_bodies;
+    PhysicsSystem physics_system;
 };
 
 void gl_resize_callback(GLFWwindow* window, int width, int height);

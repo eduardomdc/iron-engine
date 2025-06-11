@@ -19,7 +19,7 @@ private:
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     float FOVdeg = 60;
     float nearPlane = 0.1;
-    float farPlane = 100;
+    float farPlane = 1000;
 
     float base_speed = 0.1f;
     float sensitivity = 100.0f;
