@@ -15,7 +15,7 @@ struct Vertex {
 class VBO {
 public:
     uint32_t id;
-    VBO(std::vector<Vertex>& vertices);
+    VBO(const std::vector<Vertex>& vertices);
     void bind();
     void unbind();
     void clear();

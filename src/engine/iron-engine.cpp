@@ -10,13 +10,12 @@
 #include "mesh/mesh_manager.hpp"
 #include "physics_system.hpp"
 #include "shader.hpp"
-#include "mesh/primitive_meshes.hpp"
 #include "transform.hpp"
 
 IronEngine :: IronEngine () {
     window.init();
-    test_shader = new(Shader)("../src/shaders/default.vert","../src/shaders/default.frag");
-    test_entities();
+    default_shader = new(Shader)("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
+    collider_shader = new(Shader)("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
     glfwSetCursorPosCallback(window.get(), gl_mouse_move_callback);
     glfwSetWindowSizeCallback(window.get(), gl_resize_callback);
     event_manager.register_resize_callback(
@@ -28,30 +27,7 @@ IronEngine :: IronEngine () {
         camera.mouse_callback(x, y);
     }
     );
-}
-
-void IronEngine::make_cube_at (glm::vec3 pos, MeshID mesh_id, rp3d::BodyType physics_type){
-    Entity entity = create_entity();
-    MeshComponent meshc = {mesh_id};
-    meshes.add(entity, meshc);
-    Transform tf = {pos, glm::quat(), glm::vec3(1.0f)}; 
-    transforms.add(entity, tf);
-    rp3d::Vector3 ppos(pos.x, pos.y, pos.z);
-    rp3d::Quaternion ori = rp3d::Quaternion::identity();
-    rp3d::Transform phys_tf(ppos, ori);
-    rp3d::RigidBody* body = physics_system.create_rigid_body(phys_tf);
-    body->setType(physics_type);
-    body->addCollider(physics_system.create_box_collider(rp3d::Vector3(0.5, 0.5, 0.5)), rp3d::Transform::identity());
-    rigid_bodies.add(entity, {body});
-}
-
-void IronEngine :: test_entities () {
-    MeshData mesh_data = create_cube_mesh();
-    Mesh mesh;
-    mesh.make_mesh(mesh_data.vertices, mesh_data.indices);
-    MeshID id = mesh_manager.add_mesh(mesh);
-    make_cube_at(glm::vec3(0,0,0), id, rp3d::BodyType::STATIC);
-    make_cube_at(glm::vec3(0,100,0), id, rp3d::BodyType::DYNAMIC);
+    mesh_manager.setup();
 }
 
 Entity IronEngine :: create_entity () {
@@ -77,9 +53,9 @@ void IronEngine :: update() {
         rp3d::RigidBody* rb = all_bodies[i].rigid_body;
         rp3d::Transform physics_tf = rb->getTransform();
         rp3d::Vector3 pos = physics_tf.getPosition(); 
-        rp3d::Quaternion ori = physics_tf.getOrientation(); 
+        rp3d::Quaternion ori = physics_tf.getOrientation();
         tf->position = glm::vec3(pos.x, pos.y, pos.z);
-        tf->rotation = glm::quat(ori.x, ori.y, ori.z, ori.w);
+        tf->rotation = glm::quat(ori.z, ori.y, ori.x, ori.w);
     }
 }
 
@@ -99,7 +75,21 @@ void IronEngine :: render_entities() {
         if (!tf) continue; // don't render entities without transform
         MeshComponent& mesh_c = all_meshes[i];
         Mesh* mesh = mesh_manager.get_mesh(mesh_c.mesh_id);
-        mesh->draw(*test_shader, camera, *tf);
+        mesh->draw(*default_shader, camera, *tf);
+        glDepthMask(GL_FALSE); // semi transparent stuff
+        if (collider_debug_mode) {
+            rp3d::RigidBody* rb = rigid_bodies.get(entity)->rigid_body; 
+            if (!rb) continue;
+            Transform collider_tf;
+            rp3d::Transform physics_tf = rb->getTransform();
+            rp3d::Vector3 pos = physics_tf.getPosition(); 
+            rp3d::Quaternion ori = physics_tf.getOrientation();
+            collider_tf.position = glm::vec3(pos.x, pos.y, pos.z);
+            collider_tf.rotation = glm::quat(ori.z, ori.y, ori.x, ori.w);
+            collider_tf.scale = tf->scale + glm::vec3(0.1);
+            mesh->draw(*collider_shader, camera, collider_tf);
+        }
+        glDepthMask(GL_TRUE);
     }
 }
 
@@ -125,4 +115,11 @@ void gl_resize_callback(GLFWwindow* window, int width, int height){
 
 void gl_mouse_move_callback(GLFWwindow* window, double xpos, double ypos){
     IronEngine::get().event_manager.trigger_mouse_move(xpos, ypos);
+}
+
+void IronEngine :: enable_collider_debug(){
+    collider_debug_mode = true;
+}
+void IronEngine :: disable_collider_debug(){
+    collider_debug_mode = false;
 }

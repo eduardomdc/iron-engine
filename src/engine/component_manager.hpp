@@ -2,11 +2,8 @@
 #define component_manager_hpp
 
 #include <vector>
-#include <cstdint>
 #include <unordered_map>
-
-using Entity = uint32_t;
-const Entity INVALID_ENTITY = 0;
+#include "entity.hpp"
 
 template<typename T>
 class ComponentManager {

@@ -84,6 +84,6 @@ MeshData create_cube_mesh() {
         indices.push_back(baseIndex + 3);
         indices.push_back(baseIndex + 0);
     }
-
-    return {vertices, indices};
+    MeshData cube_data = {vertices, indices};
+    return cube_data;
 }

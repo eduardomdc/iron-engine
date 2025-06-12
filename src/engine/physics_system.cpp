@@ -20,6 +20,9 @@ void PhysicsSystem::update(){
         frame_time_accumulator -= time_step;
     }
 }
+void PhysicsSystem::enable_debug() {
+    physics_world->setIsDebugRenderingEnabled(true);
+}
 
 rp3d::RigidBody* PhysicsSystem::create_rigid_body(rp3d::Transform tf){
     return physics_world->createRigidBody(tf);

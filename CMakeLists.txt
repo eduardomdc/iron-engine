@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
+set(CMAKE_BUILD_TYPE Debug)
 project (
     iron-engine
     LANGUAGES C CXX
@@ -23,15 +24,18 @@ target_include_directories(glad PUBLIC ../external/glad/include)
 
 set(MY_SOURCE_FILES
     ../src/main.cpp
-    ../src/iron-engine.cpp
-    ../src/window.cpp
-    ../src/shader.cpp
-    ../src/camera.cpp
-    ../src/physics_system.cpp
-    ../src/mesh/VBO.cpp
-    ../src/mesh/VAO.cpp
-    ../src/mesh/EBO.cpp
-    ../src/mesh/primitive_meshes.cpp
+    ../src/entity_factory.cpp
+    ../src/engine/iron-engine.cpp
+    ../src/engine/window.cpp
+    ../src/engine/shader.cpp
+    ../src/engine/camera.cpp
+    ../src/engine/physics_system.cpp
+    ../src/engine/mesh/VBO.cpp
+    ../src/engine/mesh/VAO.cpp
+    ../src/engine/mesh/EBO.cpp
+    ../src/engine/mesh/mesh.cpp
+    ../src/engine/mesh/mesh_manager.cpp
+    ../src/engine/mesh/primitive_meshes.cpp
 )
 add_executable(main ${MY_SOURCE_FILES})
 

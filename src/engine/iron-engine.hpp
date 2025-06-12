@@ -24,10 +24,16 @@ public:
     void handle_inputs();
     bool is_running();
     void clear();
+
+    void enable_collider_debug();
+    void disable_collider_debug();
+
     Entity create_entity();
-    void test_entities();
     EventManager event_manager;
-    void make_cube_at(glm::vec3 pos, MeshID mesh_id, rp3d::BodyType physics_type);
+    ComponentManager<Transform> transforms;
+    ComponentManager<MeshComponent> meshes;
+    ComponentManager<RigidBody> rigid_bodies;
+    PhysicsSystem physics_system;
 private:
     IronEngine();// only by get
     IronEngine(const IronEngine&) = delete; // no copy
@@ -38,12 +44,11 @@ private:
     Entity next_entity_id = 1;
     Window window;
     Camera camera = Camera(800,600,{0,0,0});
-    Shader* test_shader;
+    Shader* default_shader;
+    Shader* collider_shader;
     MeshManager mesh_manager;
-    ComponentManager<Transform> transforms;
-    ComponentManager<MeshComponent> meshes;
-    ComponentManager<RigidBody> rigid_bodies;
-    PhysicsSystem physics_system;
+
+    bool collider_debug_mode;
 };
 
 void gl_resize_callback(GLFWwindow* window, int width, int height);

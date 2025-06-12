@@ -7,15 +7,21 @@
 
 using MeshID = uint32_t;
 
+struct MeshData {
+    std::vector<Vertex> vertices;
+    std::vector<GLuint> indices;
+};
+
 struct MeshComponent {
     MeshID mesh_id;
 };
 
 class MeshManager {
 public:
-    MeshID add_mesh(const Mesh& mesh) {
+    void setup();
+    MeshID add_mesh(const MeshData& mesh_data) {
         MeshID id = next_id++;
-        meshes[id] = mesh;
+        meshes.insert_or_assign(id,Mesh(mesh_data.vertices, mesh_data.indices));
         return id;
     }
 
@@ -25,6 +31,7 @@ public:
         return nullptr;
     }
 private:
+    void create_primitive_meshes();
     MeshID next_id = 1;
     std::unordered_map<MeshID, Mesh> meshes;
 };
