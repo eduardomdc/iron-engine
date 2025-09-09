@@ -40,6 +40,7 @@ private:
     IronEngine& operator = (const IronEngine&) = delete; // no assignments
     const double fps = 60.0;
     const double frame_time = 1/fps;
+    const double max_physics_frame_time = 0.25;
     double last_frame, accumulator;
     Entity next_entity_id = 1;
     Window window;

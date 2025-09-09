@@ -38,7 +38,7 @@ void IronEngine :: update() {
     double current_time = glfwGetTime();
     double delta_time = current_time - last_frame;
     last_frame = current_time;
-    accumulator += delta_time;
+    accumulator += std::min(delta_time, max_physics_frame_time);
     while (accumulator >= frame_time){
         physics_system.update();
         accumulator -= frame_time;
@@ -76,7 +76,6 @@ void IronEngine :: render_entities() {
         MeshComponent& mesh_c = all_meshes[i];
         Mesh* mesh = mesh_manager.get_mesh(mesh_c.mesh_id);
         mesh->draw(default_shader, camera, *tf);
-        glDepthMask(GL_FALSE); // semi transparent stuff
         if (collider_debug_mode) {
             rp3d::RigidBody* rb = rigid_bodies.get(entity)->rigid_body; 
             if (!rb) continue;
@@ -89,7 +88,6 @@ void IronEngine :: render_entities() {
             collider_tf.scale = tf->scale;
             mesh->draw(collider_shader, camera, collider_tf);
         }
-        glDepthMask(GL_TRUE);
     }
 }
 
