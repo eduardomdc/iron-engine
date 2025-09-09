@@ -14,8 +14,8 @@
 
 IronEngine :: IronEngine () {
     window.init();
-    default_shader = new(Shader)("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
-    collider_shader = new(Shader)("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
+    default_shader = Shader::load("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
+    collider_shader = Shader::load("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
     glfwSetCursorPosCallback(window.get(), gl_mouse_move_callback);
     glfwSetWindowSizeCallback(window.get(), gl_resize_callback);
     event_manager.register_resize_callback(
@@ -75,7 +75,7 @@ void IronEngine :: render_entities() {
         if (!tf) continue; // don't render entities without transform
         MeshComponent& mesh_c = all_meshes[i];
         Mesh* mesh = mesh_manager.get_mesh(mesh_c.mesh_id);
-        mesh->draw(*default_shader, camera, *tf);
+        mesh->draw(default_shader, camera, *tf);
         glDepthMask(GL_FALSE); // semi transparent stuff
         if (collider_debug_mode) {
             rp3d::RigidBody* rb = rigid_bodies.get(entity)->rigid_body; 
@@ -86,8 +86,8 @@ void IronEngine :: render_entities() {
             rp3d::Quaternion ori = physics_tf.getOrientation();
             collider_tf.position = glm::vec3(pos.x, pos.y, pos.z);
             collider_tf.rotation = glm::quat(ori.z, ori.y, ori.x, ori.w);
-            collider_tf.scale = tf->scale + glm::vec3(0.1);
-            mesh->draw(*collider_shader, camera, collider_tf);
+            collider_tf.scale = tf->scale;
+            mesh->draw(collider_shader, camera, collider_tf);
         }
         glDepthMask(GL_TRUE);
     }

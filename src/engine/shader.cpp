@@ -6,7 +6,8 @@
 #include <iostream>
 #include <sstream>
 
-Shader :: Shader(const char* vertexPath, const char* fragmentPath){
+Shader Shader::load(const char* vertexPath, const char* fragmentPath) {
+    Shader shader;
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
@@ -48,14 +49,15 @@ Shader :: Shader(const char* vertexPath, const char* fragmentPath){
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
     // shader Program
-    id = glCreateProgram();
-    glAttachShader(id, vertex);
-    glAttachShader(id, fragment);
-    glLinkProgram(id);
-    checkCompileErrors(id, "PROGRAM");
+    shader.id = glCreateProgram();
+    glAttachShader(shader.id, vertex);
+    glAttachShader(shader.id, fragment);
+    glLinkProgram(shader.id);
+    checkCompileErrors(shader.id, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+    return shader;
 }
 void Shader::use() const { 
     glUseProgram(id); 
