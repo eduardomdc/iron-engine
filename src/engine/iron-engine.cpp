@@ -7,14 +7,17 @@
 #include <reactphysics3d/mathematics/Transform.h>
 #include <reactphysics3d/mathematics/Vector3.h>
 #include "component_manager.hpp"
+#include "light.hpp"
 #include "mesh/mesh_manager.hpp"
 #include "physics_system.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
 #include "transform.hpp"
+#include "../../external/stb/stb_image.h"
 
 IronEngine :: IronEngine () {
     window.init();
+    stbi_set_flip_vertically_on_load(true); 
     default_shader = Shader::load("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
     collider_shader = Shader::load("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
     glfwSetCursorPosCallback(window.get(), gl_mouse_move_callback);
@@ -30,6 +33,7 @@ IronEngine :: IronEngine () {
     );
     mesh_manager.setup();
     uv_texture = Texture::load("../assets/textures/uv_map.png");
+    test_light = PointLight{glm::vec3(.0f, 100.0f, .0f), glm::vec3(1.0f,1.0f,1.0f)};
 }
 
 Entity IronEngine :: create_entity () {
@@ -78,19 +82,7 @@ void IronEngine :: render_entities() {
         if (!tf) continue; // don't render entities without transform
         MeshComponent& mesh_c = all_meshes[i];
         Mesh* mesh = mesh_manager.get_mesh(mesh_c.mesh_id);
-        mesh->draw(default_shader, camera, *tf);
-        if (collider_debug_mode) {
-            rp3d::RigidBody* rb = rigid_bodies.get(entity)->rigid_body; 
-            if (!rb) continue;
-            Transform collider_tf;
-            rp3d::Transform physics_tf = rb->getTransform();
-            rp3d::Vector3 pos = physics_tf.getPosition(); 
-            rp3d::Quaternion ori = physics_tf.getOrientation();
-            collider_tf.position = glm::vec3(pos.x, pos.y, pos.z);
-            collider_tf.rotation = glm::quat(ori.z, ori.y, ori.x, ori.w);
-            collider_tf.scale = tf->scale;
-            mesh->draw(collider_shader, camera, collider_tf);
-        }
+        mesh->draw(default_shader, camera, *tf, test_light);
     }
 }
 

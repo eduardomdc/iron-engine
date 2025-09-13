@@ -6,6 +6,7 @@
 #include "../shader.hpp"
 #include "../camera.hpp"
 #include "../transform.hpp"
+#include "../light.hpp"
 
 #include <glm/glm.hpp>
 #include <vector>
@@ -16,7 +17,7 @@ public:
     VAO vao;
     std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
-    void draw(const Shader& shader, const Camera& camera, const Transform& tf);
+    void draw(const Shader& shader, const Camera& camera, const Transform& tf, const PointLight& light);
 };
 
 #endif

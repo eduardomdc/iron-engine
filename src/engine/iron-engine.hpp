@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "camera.hpp"
+#include "light.hpp"
 #include "physics_system.hpp"
 #include "window.hpp"
 #include "shader.hpp"
@@ -50,6 +51,7 @@ private:
     Shader collider_shader;
     MeshManager mesh_manager;
     Texture uv_texture;
+    PointLight test_light;
 
     bool collider_debug_mode;
 };

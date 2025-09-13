@@ -32,6 +32,7 @@ set(MY_SOURCE_FILES
     ../src/engine/camera.cpp
     ../src/engine/physics_system.cpp
     ../src/engine/texture.cpp
+    ../src/engine/light.cpp
     ../src/engine/mesh/VBO.cpp
     ../src/engine/mesh/VAO.cpp
     ../src/engine/mesh/EBO.cpp

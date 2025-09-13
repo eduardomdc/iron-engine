@@ -19,10 +19,12 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
     std::cout << "mesh constructor called"<<std::endl;
 }
 
-void Mesh::draw(const Shader& shader, const Camera& camera, const Transform& tf){
+void Mesh::draw(const Shader& shader, const Camera& camera, const Transform& tf, const PointLight& light){
     shader.use(); 
     shader.set_mat4("camera", camera.transform());
     shader.set_mat4("model", tf.get_matrix());
+    shader.set_vec3("light_color", light.color);
+    shader.set_vec3("light_position", light.position);
     vao.bind();
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
