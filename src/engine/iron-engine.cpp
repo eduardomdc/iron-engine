@@ -69,6 +69,11 @@ void IronEngine :: render() {
     glfwSwapBuffers(window.get());
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // update default shader global uniforms
+    default_shader.use();
+    default_shader.set_mat4("camera", camera.transform());
+    default_shader.set_vec3("light_color", test_light.color);
+    default_shader.set_vec3("light_position", test_light.position);
     render_entities();
 }
 
@@ -82,7 +87,7 @@ void IronEngine :: render_entities() {
         if (!tf) continue; // don't render entities without transform
         MeshComponent& mesh_c = all_meshes[i];
         Mesh* mesh = mesh_manager.get_mesh(mesh_c.mesh_id);
-        mesh->draw(default_shader, camera, *tf, test_light);
+        mesh->draw(default_shader, *tf);
     }
 }
 

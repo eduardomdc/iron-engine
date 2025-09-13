@@ -46,7 +46,7 @@ private:
     double last_frame, accumulator;
     Entity next_entity_id = 1;
     Window window;
-    Camera camera = Camera(800,600,{0,0,0});
+    Camera camera = Camera(800,600,{0,10,0});
     Shader default_shader;
     Shader collider_shader;
     MeshManager mesh_manager;
