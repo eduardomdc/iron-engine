@@ -57,7 +57,7 @@ void IronEngine :: update() {
         rp3d::Vector3 pos = physics_tf.getPosition(); 
         rp3d::Quaternion ori = physics_tf.getOrientation();
         tf->position = glm::vec3(pos.x, pos.y, pos.z);
-        tf->rotation = glm::quat(ori.z, ori.y, ori.x, ori.w);
+        tf->rotation = glm::quat(ori.w, ori.x, ori.y, ori.z);
     }
 }
 
