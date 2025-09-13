@@ -10,6 +10,7 @@
 #include "mesh/mesh_manager.hpp"
 #include "physics_system.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 #include "transform.hpp"
 
 IronEngine :: IronEngine () {
@@ -28,6 +29,7 @@ IronEngine :: IronEngine () {
     }
     );
     mesh_manager.setup();
+    uv_texture = Texture::load("../assets/textures/uv_map.png");
 }
 
 Entity IronEngine :: create_entity () {

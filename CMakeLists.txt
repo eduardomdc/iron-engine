@@ -23,6 +23,7 @@ set_target_properties(glad PROPERTIES LINKER_LANGUAGE C)
 target_include_directories(glad PUBLIC ../external/glad/include)
 
 set(MY_SOURCE_FILES
+    ../external/stb/stb_image.cpp
     ../src/main.cpp
     ../src/entity_factory.cpp
     ../src/engine/iron-engine.cpp
@@ -30,6 +31,7 @@ set(MY_SOURCE_FILES
     ../src/engine/shader.cpp
     ../src/engine/camera.cpp
     ../src/engine/physics_system.cpp
+    ../src/engine/texture.cpp
     ../src/engine/mesh/VBO.cpp
     ../src/engine/mesh/VAO.cpp
     ../src/engine/mesh/EBO.cpp

@@ -11,6 +11,7 @@
 #include "transform.hpp"
 #include "mesh/mesh_manager.hpp"
 #include "event_manager.hpp"
+#include "texture.hpp"
 
 class IronEngine {
 public:
@@ -48,6 +49,7 @@ private:
     Shader default_shader;
     Shader collider_shader;
     MeshManager mesh_manager;
+    Texture uv_texture;
 
     bool collider_debug_mode;
 };
