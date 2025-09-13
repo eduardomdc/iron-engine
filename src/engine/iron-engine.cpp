@@ -69,6 +69,7 @@ void IronEngine :: render() {
 }
 
 void IronEngine :: render_entities() {
+    glBindTexture(GL_TEXTURE_2D, uv_texture.id); //bind uv tex temporary
     std::vector<MeshComponent>& all_meshes = meshes.all();
     auto& entities = meshes.entities();
     for (size_t i = 0; i < all_meshes.size(); i++) {
