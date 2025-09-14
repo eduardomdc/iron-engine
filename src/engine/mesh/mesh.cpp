@@ -11,8 +11,7 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
     EBO ebo = EBO(indices);
     vao.link_attrib(vbo, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
     vao.link_attrib(vbo, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
-    vao.link_attrib(vbo, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
-    vao.link_attrib(vbo, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
+    vao.link_attrib(vbo, 2, 2, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
     vao.unbind();
     vbo.unbind();
     ebo.unbind();

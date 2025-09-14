@@ -7,11 +7,12 @@
 
 class Camera {
 public:
-    Camera(int width, int height, glm::vec3 position);
+    void setup_camera(int width, int height, glm::vec3 position);
     void handle_inputs(GLFWwindow* window);
     void set_viewport(int width, int height);
     void mouse_callback(double x, double y);
     glm::mat4 transform() const;
+    glm::vec3 get_position() const;
 private:
     int width, height;
     glm::vec3 position;

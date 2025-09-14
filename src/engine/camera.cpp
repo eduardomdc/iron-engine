@@ -5,7 +5,7 @@
 #include <glm/geometric.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(int width, int height, glm::vec3 position){
+void Camera::setup_camera(int width, int height, glm::vec3 position){
     set_viewport(width, height);
     this->position = position;
 }
@@ -15,6 +15,10 @@ void Camera::set_viewport(int width, int height){
     this->height = height;
     mouse_x = (float)width/2;
     mouse_y = (float)height/2;
+}
+
+glm::vec3 Camera::get_position() const {
+    return position;
 }
 
 glm::mat4 Camera::transform() const {

@@ -15,15 +15,6 @@ MeshData create_cube_mesh() {
         { 0.0f, -1.0f,  0.0f}  // Bottom
     };
 
-    glm::vec3 faceColors[] = {
-        {1, 0, 0}, // Front - Red
-        {0, 1, 0}, // Back - Green
-        {0, 0, 1}, // Left - Blue
-        {1, 1, 0}, // Right - Yellow
-        {1, 0, 1}, // Top - Magenta
-        {0, 1, 1}  // Bottom - Cyan
-    };
-
     glm::vec3 positions[6][4] = {
         // Front face
         {{-0.5f, -0.5f,  0.5f},
@@ -70,7 +61,6 @@ MeshData create_cube_mesh() {
             Vertex v;
             v.position = positions[face][i];
             v.normal = faceNormals[face];
-            v.color = faceColors[face];
             v.texUV = uvs[i];
             vertices.push_back(v);
         }

@@ -17,6 +17,7 @@
 
 IronEngine :: IronEngine () {
     window.init();
+    camera.setup_camera(window.get_size().width, window.get_size().height, {0, 10, 0});
     stbi_set_flip_vertically_on_load(true); 
     default_shader = Shader::load("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
     collider_shader = Shader::load("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
@@ -33,7 +34,7 @@ IronEngine :: IronEngine () {
     );
     mesh_manager.setup();
     uv_texture = Texture::load("../assets/textures/uv_map.png");
-    test_light = PointLight{glm::vec3(.0f, 100.0f, .0f), glm::vec3(1.0f,1.0f,1.0f)};
+    test_light = PointLight{glm::vec3(.0f, 3.0f, .0f), glm::vec3(0.2f,0.2f,0.2f)};
 }
 
 Entity IronEngine :: create_entity () {
@@ -71,6 +72,7 @@ void IronEngine :: render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // update default shader global uniforms
     default_shader.use();
+    default_shader.set_vec3("view_position", camera.get_position());
     default_shader.set_mat4("camera", camera.transform());
     default_shader.set_vec3("light_color", test_light.color);
     default_shader.set_vec3("light_position", test_light.position);

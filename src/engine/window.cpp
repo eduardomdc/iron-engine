@@ -7,10 +7,13 @@ Window :: Window () {}
 void Window :: init() {
     if (init_glfw() != OK) return;
     if (init_glad() != OK) return;
-    glViewport(0,0,800,600);
+    window_size ws = get_size();
+    glViewport(0,0,ws.width,ws.height);
     glfwSetFramebufferSizeCallback(window, resize_callback);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_MULTISAMPLE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); 
@@ -22,7 +25,9 @@ EngineError Window :: init_glfw() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    window = glfwCreateWindow(800, 600, "Iron Engine", NULL, NULL);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwSwapInterval(1); // v-sync
+    window = glfwCreateWindow(1600, 800, "Iron Engine", NULL, NULL);
     if (window == NULL){
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
