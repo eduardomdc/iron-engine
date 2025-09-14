@@ -35,6 +35,7 @@ public:
     ComponentManager<Transform> transforms;
     ComponentManager<MeshComponent> meshes;
     ComponentManager<RigidBody> rigid_bodies;
+    ComponentManager<PointLight> point_lights;
     PhysicsSystem physics_system;
 private:
     IronEngine();// only by get

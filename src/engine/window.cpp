@@ -27,7 +27,7 @@ EngineError Window :: init_glfw() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwSwapInterval(1); // v-sync
-    window = glfwCreateWindow(1600, 800, "Iron Engine", NULL, NULL);
+    window = glfwCreateWindow(1000, 700, "Iron Engine", NULL, NULL);
     if (window == NULL){
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();

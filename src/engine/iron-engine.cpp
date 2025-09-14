@@ -34,7 +34,7 @@ IronEngine :: IronEngine () {
     );
     mesh_manager.setup();
     uv_texture = Texture::load("../assets/textures/uv_map.png");
-    test_light = PointLight{glm::vec3(.0f, 3.0f, .0f), glm::vec3(0.2f,0.2f,0.2f)};
+    test_light = PointLight{glm::vec3(.0f, 3.0f, .0f), glm::vec3(0.5f,0.5f,0.5f)};
 }
 
 Entity IronEngine :: create_entity () {
