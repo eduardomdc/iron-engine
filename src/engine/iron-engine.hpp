@@ -20,6 +20,7 @@ public:
         static IronEngine instance;
         return instance;
     }
+    void init();
     void render();
     void update();
     void render_entities();

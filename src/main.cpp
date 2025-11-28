@@ -16,6 +16,7 @@ void test_physics () {
 }
 
 int main (){
+    Iron().init();
     test_physics();
     while (Iron().is_running()) {
         Iron().update();
