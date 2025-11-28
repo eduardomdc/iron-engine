@@ -60,4 +60,6 @@ private:
 void gl_resize_callback(GLFWwindow* window, int width, int height);
 void gl_mouse_move_callback(GLFWwindow* window, double xpos, double ypos); 
 
+inline IronEngine& Iron() {return IronEngine::get();}
+
 #endif

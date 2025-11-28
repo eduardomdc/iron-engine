@@ -12,18 +12,16 @@ void test_physics () {
             }
         }
     }
+    make_cuboid(glm::vec3(0,0,0), glm::vec3(100,1,100), rp3d::BodyType::STATIC);
 }
 
 int main (){
     test_physics();
-    //IronEngine::get().enable_collider_debug();
-    //make_cuboid(glm::vec3(0,100,0), glm::vec3(1,1,1), rp3d::BodyType::DYNAMIC);
-    make_cuboid(glm::vec3(0,0,0), glm::vec3(100,1,100), rp3d::BodyType::STATIC);
-    while (IronEngine::get().is_running()) {
-        IronEngine::get().update();
-        IronEngine::get().render();
-        IronEngine::get().handle_inputs();
+    while (Iron().is_running()) {
+        Iron().update();
+        Iron().render();
+        Iron().handle_inputs();
     }
-    IronEngine::get().clear();
+    Iron().clear();
     return 0;
 }
