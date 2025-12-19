@@ -14,12 +14,13 @@
 #include "texture.hpp"
 #include "transform.hpp"
 #include "../../external/stb/stb_image.h"
+#include "window.hpp"
 
 IronEngine :: IronEngine () {}
 
 void IronEngine :: init () {
-    window.init();
-    camera.setup_camera(window.get_size().width, window.get_size().height, {0, 10, 0});
+    window.init(WindowConfig{.cursor_mode=CursorMode::Disabled});
+    camera.setup_camera(window.get_window_size().width, window.get_window_size().height, {0, 10, 0});
     stbi_set_flip_vertically_on_load(true); 
     default_shader = Shader::load("../src/engine/shaders/default.vert","../src/engine/shaders/default.frag");
     collider_shader = Shader::load("../src/engine/shaders/default.vert", "../src/engine/shaders/collider.frag");
